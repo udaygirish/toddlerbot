@@ -17,7 +17,7 @@ or finding anything missing.
 Please double-check the BOM to ensure you have all the necessary tools and purchasing any missing items before you start building.
 
 We recommend purchasing the **essentials** section first, in case any change of plan is needed.
-PCB files are not included in the BOM. Please refer to the :ref:`pcb` section for more information.
+PCB files are not included in the BOM. Please refer to the :ref:`pcb_8ch` section for more information.
 
 .. raw:: html
 

@@ -24,12 +24,12 @@ Sourcing the Parts
 -----------------------
 The first step? Gather your gear!
 Before you start building, you'll need to fill your shopping cart with all the essential components.
-Make sure you have everything in the :ref:`bill_of_materials` and :ref:`pcb` sections so you can assemble your ToddlerBot without any delays.
+Make sure you have everything in the :ref:`bill_of_materials` and :ref:`pcb_8ch` sections so you can assemble your ToddlerBot without any delays.
 
 We highly recommend the following to streamline your build process:
 
 #. **Order the PCB first**: Since PCBs typically have a lead time of around 10 days from order to delivery, placing your order early ensures they arrive on time.  
-   Check the :ref:`pcb` section for details. Note that PCB is only required in the last step of the assembly, so you can start 3D printing 
+   Check the :ref:`pcb_8ch` section for details. Note that PCB is only required in the last step of the assembly, so you can start 3D printing
    and assembling as soon as other parts from the BOM arrive!
 
 #. **Use a Bambu Lab 3D printer**: `Bambu Lab <https://bambulab.com/en-us>`_ printers are affordable and will save you time and hassle with part tolerances.  
