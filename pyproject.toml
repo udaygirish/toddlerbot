@@ -33,6 +33,8 @@ dependencies = [
     "mediapy",
     "mink",
     "moviepy==1.0.3",
+    "mujoco==3.3.4",
+    "mujoco-mjx==3.3.4",
     "mypy",
     "numpy==1.26.4",
     "onnxruntime",
