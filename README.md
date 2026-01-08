@@ -2,13 +2,12 @@
 
 ![ToddlerBot](docs/_static/banner.png)
 
-**[Paper](https://arxiv.org/abs/2502.00893)** |
-**[Website](https://toddlerbot.github.io/)** |
-**[Video](https://youtu.be/A43QxHSgLyM)** | 
-**[Tweet](https://x.com/HaochenShi74/status/1886599720279400732)** |
-**[Documentation](https://hshi74.github.io/toddlerbot)** |
-**[Onshape](https://cad.onshape.com/documents/565bc33af293a651f66e88d2)** |
-**[MakerWorld](https://makerworld.com/en/models/1733983)**
+|  | Paper | Website | Tweet |
+|:--|:-----:|:-------:|:-----:|
+| **Locomotion Beyond Feet** (2026) | [arXiv](https://arxiv.org/abs/2601.03607) | [Site](https://locomotion-beyond-feet.github.io/) | [X](https://x.com/taeyang___11/status/2009359173302276391) |
+| **ToddlerBot** (2025) | [arXiv](https://arxiv.org/abs/2502.00893) | [Site](https://toddlerbot.github.io/) | [X](https://x.com/HaochenShi74/status/1886599720279400732) |
+
+[Documentation](https://hshi74.github.io/toddlerbot) | [Onshape](https://cad.onshape.com/documents/565bc33af293a651f66e88d2) | [MakerWorld](https://makerworld.com/en/models/1733983)
 
 ToddlerBot is a low-cost, open-source humanoid robot platform designed for scalable policy learning and research in robotics and AI.
 
@@ -16,7 +15,60 @@ This codebase includes low-level control, RL training, DP training, real-world d
 
 Built entirely in Python, it is **fully pip-installable** (python >= 3.10) for seamless setup and usage!
 
-## We have released ToddlerBot 2.0!
+## News & Updates
+- **2026-01-08:** Locomotion Beyond Feet release - multi-skill whole-body locomotion system - [Paper](https://arxiv.org/abs/2601.03607) | [Website](https://locomotion-beyond-feet.github.io/) | [Tweet](https://x.com/taeyang___11/status/2009359173302276391)
+- **2025-08-25:** ToddlerBot 2.0 release - see [Changelog](CHANGELOG.md) for details
+- **2025-02-03:** ToddlerBot initial release - [Paper](https://arxiv.org/abs/2502.00893) | [Website](https://toddlerbot.github.io/) | [Video](https://youtu.be/A43QxHSgLyM) | [Tweet](https://x.com/HaochenShi74/status/1886599720279400732)
+
+## Locomotion Beyond Feet
+
+We introduce an egocentric multi-skill whole-body locomotion system that enables ToddlerBot to traverse diverse obstacles.
+
+https://github.com/user-attachments/assets/b935f30d-a930-4cff-a9c8-e4cf119ce9c8
+
+<!-- TODO: Replace with actual GitHub video URL after uploading -->
+
+### Getting Started
+
+**1. Create reference motions** using the [Keyframe App](https://github.com/Stanford-TML/robot_keyframe_kit)
+
+**2. Train RL policies** for each skill:
+```bash
+python toddlerbot/locomotion/train_mjx.py --gin-file <skill_name> --env <skill_name>
+```
+
+**3. Collect depth data and train the skill classifier:**
+
+Collect RGB stereo frames. Follow the prompts to select a skill label, press space to start recording, and press space again to pause. Repeat for each skill.
+```bash
+python toddlerbot/skill_classifier/data/collect_real_world_skill_data.py
+```
+
+Process offline to create depth maps from the collected stereo images.
+```bash
+python toddlerbot/skill_classifier/data/create_depth_data.py
+```
+
+Train the classifier on depth images with skill labels.
+```bash
+python toddlerbot/skill_classifier/training/train.py <data_dir>
+```
+
+**4. Run the full system:**
+
+Start the depth estimation server.
+```bash
+python toddlerbot/skill_classifier/run_foundation_stereo.py
+```
+
+Specify the checkpoint path for each trained skill in `POLICY_CONFIGS` in `run_multiple_policy.py`, then run the multi-skill locomotion system.
+```bash
+python toddlerbot/policies/run_multiple_policy.py --skill-classifier <classifier_checkpoint>
+```
+
+Once the depth estimation server is ready after warm-up and `run_multiple_policy.py` has loaded all policy checkpoints and achieved the standing pose, depth estimates are continuously sent for skill classification, and the robot will perform the appropriate skills autonomously.
+
+## ToddlerBot 2.0
 See [Changelog](CHANGELOG.md) for the list of new features and a migration guide from 1.0 to 2.0.
 
 ## Setup
@@ -79,7 +131,22 @@ We welcome contributions from the community! To contribute, just follow the stan
 
 ## Citation
 If you use ToddlerBot for published research, please cite:
-```
+```bibtex
+@misc{yang2026locomotion,
+  title = {Locomotion {{Beyond Feet}}},
+  author = {Yang, Tae Hoon and Shi, Haochen and Hu, Jiacheng and Zhang, Zhicong and Jiang, Daniel and Wang, Weizhuo and He, Yao and Wu, Zhen and Chen, Yuming and Hou, Yifan and Kennedy, Monroe and Song, Shuran and Liu, C. Karen},
+  year = 2026,
+  month = jan,
+  number = {arXiv:2601.03607},
+  eprint = {2601.03607},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2601.03607},
+  urldate = {2026-01-08},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Robotics}
+}
+
 @article{shi2025toddlerbot,
   title={ToddlerBot: Open-Source ML-Compatible Humanoid Platform for Loco-Manipulation},
   author={Shi, Haochen and Wang, Weizhuo and Song, Shuran and Liu, C. Karen},
